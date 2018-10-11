@@ -3,7 +3,6 @@ package com.middleware.middleware.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.middleware.middleware.model.Connector;
 import com.middleware.middleware.model.Middleware;
-import com.middleware.middleware.script.EvalConversionScript;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
