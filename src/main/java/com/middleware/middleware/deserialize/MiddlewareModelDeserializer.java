@@ -31,8 +31,7 @@ public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
         Middleware middleware = new Middleware();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         TreeNode rootNode = node.get("Middleware");
-
-        List<Connector> connectors = getConnectors(rootNode.get("Connectors"));
+        middleware.setConnectors(getConnectors(rootNode.get("Connectors")));
 
         return middleware;
 
