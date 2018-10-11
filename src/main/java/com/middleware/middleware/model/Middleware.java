@@ -10,7 +10,6 @@ import com.middleware.middleware.deserialize.MiddlewareModelDeserializer;
 public class Middleware {
 
     List<Connector> connectors;
-    List<ConnectorInstance> connectorInstances;
 
     public List<Connector> getConnectors() {
         return connectors;
@@ -20,12 +19,5 @@ public class Middleware {
         this.connectors = connectors;
     }
 
-    public List<ConnectorInstance> getConnectorInstances() {
-        return connectorInstances;
-    }
-
-    public void setConnectorInstances(List<ConnectorInstance> connectorInstances) {
-        this.connectorInstances = connectorInstances;
-    }
 
 }

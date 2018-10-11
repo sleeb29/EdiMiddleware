@@ -1,18 +1,19 @@
 package com.middleware.middleware.deserialize;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.middleware.middleware.model.Connector;
-import com.middleware.middleware.model.ConnectorInstance;
+import com.middleware.middleware.model.Instance;
 import com.middleware.middleware.model.Middleware;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
 
@@ -32,10 +33,6 @@ public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
         TreeNode rootNode = node.get("Middleware");
 
         List<Connector> connectors = getConnectors(rootNode.get("Connectors"));
-        List<ConnectorInstance> connectorInstances = getConnectorInstances(rootNode.get("ConnectorInstances"));
-
-        middleware.setConnectors(connectors);
-        middleware.setConnectorInstances(connectorInstances);
 
         return middleware;
 
@@ -52,6 +49,7 @@ public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
             connector.setName(formatTreeNodeToString(connectorNode.get("name")));
             connector.setProtocol(formatTreeNodeToString(connectorNode.get("protocol")));
             connector.setScript(formatTreeNodeToString(connectorNode.get("script")));
+            connector.setListeningPathToInstanceMap(getListeningPathToInstanceMap(connectorNode));
 
             connectors.add(connector);
 
@@ -61,25 +59,23 @@ public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
 
     }
 
-    private List<ConnectorInstance> getConnectorInstances(TreeNode connectorInstancesNode){
+    private Map<String, Instance> getListeningPathToInstanceMap(TreeNode instancesNode){
 
-        List<ConnectorInstance> connectorInstances = new ArrayList<>();
-        for(int i = 0; i < connectorInstancesNode.size(); i++){
+        Map<String, Instance> listeningPathToInstanceMap = new HashMap<>();
 
-            TreeNode connectorInstanceNode = connectorInstancesNode.get(i);
-            ConnectorInstance connectorInstance = new ConnectorInstance();
 
-            connectorInstance.setName(formatTreeNodeToString(connectorInstanceNode.get("name")));
-            connectorInstance.
-                    setDestinationEndpoint(formatTreeNodeToString(connectorInstanceNode.get("destination_endpoint")));
-            connectorInstance.
-                    setListeningEndpoint(formatTreeNodeToString(connectorInstanceNode.get("listening_endpoint")));
+        TreeNode instances = instancesNode.get("Instances");
+        instances.fieldNames().forEachRemaining(instanceKey -> {
 
-            connectorInstances.add(connectorInstance);
+            TreeNode instanceNode = instances.get(instanceKey);
+            Instance instance = new Instance();
+            instance.setDestinationEndpoint(formatTreeNodeToString(instanceNode.get("destination_endpoint")));
 
-        }
+            listeningPathToInstanceMap.put(instanceKey, instance);
 
-        return connectorInstances;
+        });
+
+        return listeningPathToInstanceMap;
 
     }
 

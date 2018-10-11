@@ -1,10 +1,13 @@
 package com.middleware.middleware.model;
 
+import java.util.Map;
+
 public class Connector {
 
     String name;
     String protocol;
     String script;
+    Map<String, Instance> listeningPathToInstanceMap;
 
     public String getName() {
         return name;
@@ -28,6 +31,14 @@ public class Connector {
 
     public void setScript(String script) {
         this.script = script;
+    }
+
+    public Map<String, Instance> getListeningPathToInstanceMap() {
+        return listeningPathToInstanceMap;
+    }
+
+    public void setListeningPathToInstanceMap(Map<String, Instance> listeningPathToInstanceMap) {
+        this.listeningPathToInstanceMap = listeningPathToInstanceMap;
     }
 
 }
