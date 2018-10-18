@@ -64,6 +64,11 @@ public class MiddlewareModelDeserializer extends StdDeserializer<Middleware> {
 
 
         TreeNode instances = instancesNode.get("Instances");
+
+        if(instances == null){
+            return listeningPathToInstanceMap;
+        }
+
         instances.fieldNames().forEachRemaining(instanceKey -> {
 
             TreeNode instanceNode = instances.get(instanceKey);

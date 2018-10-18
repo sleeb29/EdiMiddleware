@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,8 +21,9 @@ public class MiddlewareConfig {
 
         StringBuilder jsonStringBuilder = new StringBuilder();
 
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         try (BufferedReader br =
-                     new BufferedReader(new FileReader("resources/Middleware.json"))) {
+                     new BufferedReader(new FileReader(classLoader.getResource("Middleware.json").getFile()))) {
             jsonStringBuilder.append(br.readLine());
         }
 
