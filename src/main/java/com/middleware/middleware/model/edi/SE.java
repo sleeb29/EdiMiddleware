@@ -1,8 +1,16 @@
 package com.middleware.middleware.model.edi;
 
-public class SE {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class SE {
+	@XmlElement(name="numberOfSegmenetsIncluded")
     String numberOfSegmenetsIncluded;
+	@XmlElement(name="transactionSetControlNumber")
     String transactionSetControlNumber;
 
 }

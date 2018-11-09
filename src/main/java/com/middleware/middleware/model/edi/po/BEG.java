@@ -1,18 +1,36 @@
 package com.middleware.middleware.model.edi.po;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class BEG {
 
+	@XmlElement(name="transactionSetPurchaseCode")
     String transactionSetPurchaseCode;
+	@XmlElement(name="purchaseOrderTypeCode")
     String purchaseOrderTypeCode;
+	@XmlElement(name="purchaseOrderNumber")
     String purchaseOrderNumber;
+	@XmlElement(name="releaseNumber")
     String releaseNumber;
+	@XmlElement(name="purchaseOrderDate")
     String purchaseOrderDate;
+	@XmlElement(name="contractNumber")
     String contractNumber;
 
+	@XmlElement(name="N9")
     N9 N9;
+	@XmlElement(name="DTM")
     DTM DTM;
+    @XmlElement(name="MSG")
     EXT_MSG MSG;
+	@XmlElement(name="PO")
     PO PO;
+	@XmlElement(name="REF")
     REF REF;
     MSG MSG2;
 

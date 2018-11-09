@@ -1,14 +1,28 @@
 package com.middleware.middleware.model.edi;
 
-public class GS {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class GS {
+	@XmlElement(name="GS01")
     String GS01;
+	@XmlElement(name="GS02")
     String GS02;
+	@XmlElement(name="GS03")
     String GS03;
+	@XmlElement(name="GS04")
     String GS04;
+	@XmlElement(name="GS05")
     String GS05;
+	@XmlElement(name="GS06")
     String GS06;
+	@XmlElement(name="GS07")
     String GS07;
+	@XmlElement(name="GS08")
     String GS08;
 
     public String getGS01() {

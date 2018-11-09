@@ -2,11 +2,21 @@ package com.middleware.middleware.model.edi.po;
 
 import java.util.List;
 
-public class PO {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PO {
+	@XmlElement(name="assignedIdentifier")
     String assignedIdentifier;
+	@XmlElement(name="quantityOrdered")
     String quantityOrdered;
+	@XmlElement(name="unitOfMeasure")
     String unitOfMeasure;
+	@XmlElement(name="itemUnitPrice")
     String itemUnitPrice;
 
     List<ProductService> productServiceList;

@@ -1,10 +1,20 @@
 package com.middleware.middleware.model.edi.po;
 
-public class EXT_MSG extends MSG {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class EXT_MSG {
+	@XmlElement(name="N1")
     N1 N1;
+	@XmlElement(name="N3")
     N3 N3;
+	@XmlElement(name="N4")
     N4 N4;
+	@XmlElement(name="PER")
     PER PER;
 
     public com.middleware.middleware.model.edi.po.N1 getN1() {

@@ -2,9 +2,17 @@ package com.middleware.middleware.model.edi.po;
 
 import com.middleware.middleware.model.edi.ST;
 
-public class PO_ST extends ST {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PO_ST {
+	@XmlElement(name="BEG")
     BEG BEG;
+	@XmlElement(name="CTT")
     CTT CTT;
 
     public BEG getBEG() {

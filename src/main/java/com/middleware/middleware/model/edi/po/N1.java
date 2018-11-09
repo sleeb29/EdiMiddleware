@@ -1,10 +1,20 @@
 package com.middleware.middleware.model.edi.po;
 
-public class N1 {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class N1 {
+	@XmlElement(name="entityIdCode")
     String entityIdCode;
+	@XmlElement(name="nameOfBuyingParty")
     String nameOfBuyingParty;
+	@XmlElement(name="idCodeQualifier")
     String idCodeQualifier;
+	@XmlElement(name="idCode")
     String idCode;
 
     public String getEntityIdCode() {

@@ -41,12 +41,18 @@ public class ConverterService {
 
         Instance instance = connector.getListeningPathToInstanceMap().get(listeningPath);
 
-        EvalConversionScript evalConversionScript = new EvalConversionScript();
-        String newMessage = evalConversionScript.convertMessage(connector.getScript(), message);
+        if(listeningPath.contains("ediToSoap")){
 
-        String result = invokeDestinationService(instance.getDestinationEndpoint(), newMessage);
+            String result = "";//sendEdiOnSOAPPath();
+            return result;
 
-        return result;
+        } else {
+            EvalConversionScript evalConversionScript = new EvalConversionScript();
+            String newMessage = evalConversionScript.convertMessage(connector.getScript(), message);
+
+            String result = invokeDestinationService(instance.getDestinationEndpoint(), newMessage);
+            return result;
+        }
 
     }
 

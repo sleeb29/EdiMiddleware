@@ -1,9 +1,18 @@
 package com.middleware.middleware.model.edi.po;
 
-public class N4 {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class N4 {
+	@XmlElement(name="cityName")
     String cityName;
+	@XmlElement(name="stateOrProvinceCode")
     String stateOrProvinceCode;
+	@XmlElement(name="postalCode")
     String postalCode;
 
     public String getCityName() {

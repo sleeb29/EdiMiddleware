@@ -1,10 +1,20 @@
 package com.middleware.middleware.model.edi.po;
 
-public class PER {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class PER {
+	@XmlElement(name="contractFunctionCode")
     String contractFunctionCode;
+	@XmlElement(name="name")
     String name;
+	@XmlElement(name="communicationNumberQualifier")
     String communicationNumberQualifier;
+	@XmlElement(name="telephoneNumber")
     String telephoneNumber;
 
     public String getContractFunctionCode() {

@@ -1,9 +1,18 @@
 package com.middleware.middleware.model.edi.po;
 
-public class REF {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class REF {
+	@XmlElement(name="referenceIdentificationQualifier")
     String referenceIdentificationQualifier;
+	@XmlElement(name="referenceIdentification")
     String referenceIdentification;
+	@XmlElement(name="description")
     String description;
 
     public String getReferenceIdentificationQualifier() {

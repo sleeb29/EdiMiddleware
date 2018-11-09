@@ -1,22 +1,44 @@
 package com.middleware.middleware.model.edi;
 
-public class ISA {
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
+@XmlRootElement(name = "EDI850")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ISA {
+	@XmlElement(name="ISA01")
     String ISA01;
+	@XmlElement(name="ISA02")
     String ISA02;
+	@XmlElement(name="ISA03")
     String ISA03;
+	@XmlElement(name="ISA04")
     String ISA04;
+	@XmlElement(name="ISA05")
     String ISA05;
+	@XmlElement(name="ISA06")
     String ISA06;
+	@XmlElement(name="ISA07")
     String ISA07;
+	@XmlElement(name="ISA08")
     String ISA08;
+	@XmlElement(name="ISA09")
     String ISA09;
+	@XmlElement(name="ISA10")
     String ISA10;
+	@XmlElement(name="ISA11")
     String ISA11;
+	@XmlElement(name="ISA12")
     String ISA12;
+	@XmlElement(name="ISA13")
     String ISA13;
+	@XmlElement(name="ISA14")
     String ISA14;
+	@XmlElement(name="ISA15")
     String ISA15;
+	@XmlElement(name="ISA16")
     String ISA16;
 
     public String getISA01() {
