@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
-@XmlRootElement(name = "EDI850")
+@XmlRootElement(name = "PID")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PID {
 	@XmlElement(name="itemDescriptionType")

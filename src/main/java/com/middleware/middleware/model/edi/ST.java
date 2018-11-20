@@ -13,4 +13,11 @@ public abstract class ST {
         this.transactionSetControlNumber = transactionSetControlNumber;
     }
 
+    public String getTransactionSetIdentifierCode() {
+        return transactionSetIdentifierCode;
+    }
+
+    public String getTransactionSetControlNumber() {
+        return transactionSetControlNumber;
+    }
 }

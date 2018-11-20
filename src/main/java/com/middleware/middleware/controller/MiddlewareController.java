@@ -1,5 +1,7 @@
 package com.middleware.middleware.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.middleware.middleware.model.edi.po.EDI850;
 import com.middleware.middleware.service.ConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +18,16 @@ public class MiddlewareController {
     @Autowired
     ConverterService converterService;
 
-    @RequestMapping(value="/converter/*/*", method = RequestMethod.POST)
-    public ResponseEntity<Void> ediListener(String purchaseOrder){
+    @RequestMapping(value="/converter", method = RequestMethod.POST)
+    public ResponseEntity<Void> ediListener(@RequestBody EDI850 purchaseOrder){
+        System.out.println(purchaseOrder);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value="/x12", method = RequestMethod.POST)
+    public ResponseEntity<EDI850> x12Listener(@RequestBody String purchaseOrder) throws NoSuchFieldException, IllegalAccessException, JsonProcessingException {
+        EDI850 edi850 = converterService.convertToEDI850(purchaseOrder);
+        return new ResponseEntity<>(edi850, HttpStatus.OK);
+    }
 
 }

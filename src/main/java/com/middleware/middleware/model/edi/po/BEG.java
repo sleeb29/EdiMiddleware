@@ -4,8 +4,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
+import java.util.List;
 
-@XmlRootElement(name = "EDI850")
+@XmlRootElement(name = "BEG")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BEG {
 
@@ -29,10 +30,11 @@ public class BEG {
     @XmlElement(name="MSG")
     EXT_MSG MSG;
 	@XmlElement(name="PO")
-    PO PO;
+    List<PO> PO;
 	@XmlElement(name="REF")
-    REF REF;
-    MSG MSG2;
+    List<REF> REF;
+    @XmlElement(name="MSG2")
+    List<MSG> MSG2;
 
     public String getTransactionSetPurchaseCode() {
         return transactionSetPurchaseCode;
@@ -106,27 +108,27 @@ public class BEG {
         this.MSG = MSG;
     }
 
-    public com.middleware.middleware.model.edi.po.PO getPO() {
+    public List<com.middleware.middleware.model.edi.po.PO> getPO() {
         return PO;
     }
 
-    public void setPO(com.middleware.middleware.model.edi.po.PO PO) {
+    public void setPO(List<com.middleware.middleware.model.edi.po.PO> PO) {
         this.PO = PO;
     }
 
-    public com.middleware.middleware.model.edi.po.REF getREF() {
+    public List<com.middleware.middleware.model.edi.po.REF> getREF() {
         return REF;
     }
 
-    public void setREF(com.middleware.middleware.model.edi.po.REF REF) {
+    public void setREF(List<com.middleware.middleware.model.edi.po.REF> REF) {
         this.REF = REF;
     }
 
-    public com.middleware.middleware.model.edi.po.MSG getMSG2() {
+    public List<com.middleware.middleware.model.edi.po.MSG> getMSG2() {
         return MSG2;
     }
 
-    public void setMSG2(com.middleware.middleware.model.edi.po.MSG MSG2) {
+    public void setMSG2(List<com.middleware.middleware.model.edi.po.MSG> MSG2) {
         this.MSG2 = MSG2;
     }
 }

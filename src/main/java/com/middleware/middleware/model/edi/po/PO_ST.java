@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
-@XmlRootElement(name = "EDI850")
+@XmlRootElement(name = "ST")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PO_ST {
+public class PO_ST extends ST {
 	@XmlElement(name="BEG")
     BEG BEG;
 	@XmlElement(name="CTT")

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
 
-@XmlRootElement(name = "EDI850")
+@XmlRootElement(name = "PO")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PO {
 	@XmlElement(name="assignedIdentifier")
@@ -18,6 +18,8 @@ public class PO {
     String unitOfMeasure;
 	@XmlElement(name="itemUnitPrice")
     String itemUnitPrice;
+
+	PID pid;
 
     List<ProductService> productServiceList;
 
@@ -59,5 +61,13 @@ public class PO {
 
     public void setProductServiceList(List<ProductService> productServiceList) {
         this.productServiceList = productServiceList;
+    }
+
+    public PID getPid() {
+        return pid;
+    }
+
+    public void setPid(PID pid) {
+        this.pid = pid;
     }
 }

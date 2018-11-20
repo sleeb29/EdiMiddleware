@@ -9,7 +9,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 @XmlRootElement(name = "EDI850")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class EDI850 {
+public class EDI850
+    extends EDI
+{
     PO_ST ST;
 
     public PO_ST getST() {

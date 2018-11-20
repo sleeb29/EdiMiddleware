@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">>
+
+  <xs:element name="postPurchaseOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="edi850" type="edi850" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="postPurchaseOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="response" type="response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="EDI850" nillable="true" type="xs:anyType"/>
+
+  <xs:complexType name="edi850">
+    <xs:sequence>
+      <xs:element name="ST" type="poST" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="poST">
+    <xs:sequence>
+      <xs:element name="BEG" type="beg" minOccurs="0"/>
+      <xs:element name="CTT" type="ctt" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="beg">
+    <xs:sequence>
+      <xs:element name="transactionSetPurchaseCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="purchaseOrderTypeCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="purchaseOrderNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="releaseNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="purchaseOrderDate" type="xs:string" minOccurs="0"/>
+      <xs:element name="contractNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="N9" type="n9" minOccurs="0"/>
+      <xs:element name="DTM" type="dtm" minOccurs="0"/>
+      <xs:element name="MSG" type="extMSG" minOccurs="0"/>
+      <xs:element name="PO" type="po" minOccurs="0"/>
+      <xs:element name="REF" type="ref" minOccurs="0"/>
+      <xs:element name="MSG2" type="msg" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="n9">
+    <xs:sequence>
+      <xs:element name="referenceIdentificationQualifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenceIdentification" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dtm">
+    <xs:sequence>
+      <xs:element name="dateTimeQualifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="systemDate" type="xs:string" minOccurs="0"/>
+      <xs:element name="systemTime" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="extMSG">
+    <xs:sequence>
+      <xs:element name="N1" type="n1" minOccurs="0"/>
+      <xs:element name="N3" type="n3" minOccurs="0"/>
+      <xs:element name="N4" type="n4" minOccurs="0"/>
+      <xs:element name="PER" type="per" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="n1">
+    <xs:sequence>
+      <xs:element name="entityIdCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="nameOfBuyingParty" type="xs:string" minOccurs="0"/>
+      <xs:element name="idCodeQualifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="idCode" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="n3">
+    <xs:sequence>
+      <xs:element name="streetAddress1" type="xs:string" minOccurs="0"/>
+      <xs:element name="streetAddress2" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="n4">
+    <xs:sequence>
+      <xs:element name="cityName" type="xs:string" minOccurs="0"/>
+      <xs:element name="stateOrProvinceCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalCode" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="per">
+    <xs:sequence>
+      <xs:element name="contractFunctionCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="communicationNumberQualifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="telephoneNumber" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="po">
+    <xs:sequence>
+      <xs:element name="assignedIdentifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="quantityOrdered" type="xs:string" minOccurs="0"/>
+      <xs:element name="unitOfMeasure" type="xs:string" minOccurs="0"/>
+      <xs:element name="itemUnitPrice" type="xs:string" minOccurs="0"/>
+      <xs:element name="productServiceList" type="productService" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="productService">
+    <xs:sequence>
+      <xs:element name="productServiceId" type="xs:string" minOccurs="0"/>
+      <xs:element name="productServiceIdQualifiers" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ref">
+    <xs:sequence>
+      <xs:element name="referenceIdentificationQualifier" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenceIdentification" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="msg">
+    <xs:sequence>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ctt">
+    <xs:sequence>
+      <xs:element name="totalNumberOfPurchaseOrderLineItems" type="xs:string" minOccurs="0"/>
+      <xs:element name="hashTotal" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="response">
+    <xs:sequence>
+      <xs:element name="success" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="purchaseOrderId" type="xs:ID" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
