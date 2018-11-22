@@ -3,14 +3,14 @@ package com.middleware.middleware.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.middleware.middleware.converter.StringToEDIConverter;
+import com.middleware.middleware.converter.EDIConverter;
 import com.middleware.middleware.model.Connector;
 import com.middleware.middleware.model.Instance;
 import com.middleware.middleware.model.Middleware;
+import com.middleware.middleware.model.edi.po.BEG;
 import com.middleware.middleware.model.edi.po.EDI850;
 import com.middleware.middleware.processor.X12Processor;
 import com.middleware.middleware.script.EvalConversionScript;
-import generated.PostPurchaseOrder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,11 +35,11 @@ public class ConverterService {
     Map<String, Connector> connectorMap;
 
     @Autowired
-    StringToEDIConverter ediConverter;
+    EDIConverter ediConverter;
 
     static final Logger LOGGER = Logger.getLogger(ConverterService.class);
 
-    public EDI850 convertToEDI850(String purchaseOrderMessage)
+    public String convertToEDI850(String purchaseOrderMessage)
             throws NoSuchFieldException, IllegalAccessException, JsonProcessingException
     {
 
@@ -54,7 +54,9 @@ public class ConverterService {
 
         sendEmail(edi850);
 
-        return response;
+        String x12Response = ediConverter.convertToX12(edi850);
+
+        return x12Response;
     }
 
     public String convertMessage(String connectorId, String listeningPath, String message) throws ScriptException {
@@ -139,10 +141,14 @@ public class ConverterService {
 
 
             message.setSubject("Purchase Order: " + edi850.getST().getTransactionSetIdentifierCode());
-            message.setText("Order fulfilled:\n");
-            /*
-            ITEM SUMMARY
-             */
+
+            StringBuilder messageText = new StringBuilder("Order fulfilled:\n");
+            BEG beg = edi850.getST().getBEG();
+            String dateText = beg.getDTM().getSystemDate() + "T" + beg.getDTM().getSystemTime();
+            messageText.append("fulfilled date: " + dateText + "\n");
+            messageText.append("Instructions " + beg.getMSG().getMessages().get(0) + "\n");
+            messageText.append("Reference Number to look up order:" + beg.getPurchaseOrderNumber());
+            message.setText(messageText.toString());
             Transport.send(message);
         }
         catch (MessagingException mex)

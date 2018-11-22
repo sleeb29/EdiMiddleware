@@ -25,9 +25,9 @@ public class MiddlewareController {
     }
 
     @RequestMapping(value="/x12", method = RequestMethod.POST)
-    public ResponseEntity<EDI850> x12Listener(@RequestBody String purchaseOrder) throws NoSuchFieldException, IllegalAccessException, JsonProcessingException {
-        EDI850 edi850 = converterService.convertToEDI850(purchaseOrder);
-        return new ResponseEntity<>(edi850, HttpStatus.OK);
+    public ResponseEntity<String > x12Listener(@RequestBody String purchaseOrder) throws NoSuchFieldException, IllegalAccessException, JsonProcessingException {
+        String x12 = converterService.convertToEDI850(purchaseOrder);
+        return new ResponseEntity<>(x12, HttpStatus.OK);
     }
 
 }

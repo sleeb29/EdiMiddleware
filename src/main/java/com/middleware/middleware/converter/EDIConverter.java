@@ -7,10 +7,9 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
-public class StringToEDIConverter {
+public class EDIConverter {
 
     static final String DELIMITER = "[*]";
 
@@ -292,6 +291,20 @@ public class StringToEDIConverter {
 
     }
 
+    private String getFields(Object obj, String fieldName) throws IllegalAccessException {
+        List<String> output = new ArrayList<>();
+        Field[] fields = obj.getClass().getDeclaredFields();
+        for(Field field : fields)
+        {
+            if(field.getName().startsWith(fieldName))
+            {
+                field.setAccessible(true);
+                output.add(field.get(obj).toString());
+            }
+        }
+        return String.join("*", output);
+    }
+
     private void setFields(Object obj, String fieldName, String[] record)
             throws NoSuchFieldException, IllegalAccessException {
         for(int i = 1; i < record.length; i++)
@@ -312,8 +325,106 @@ public class StringToEDIConverter {
         return temp;
     }
 
+    public String convertToX12(EDI850 edi850)
+            throws IllegalAccessException
+    {
+        String output = "*";
+        StringBuilder x12 = new StringBuilder();
+        x12.append("ISA" + output + getFields(edi850.getISA(), "ISA"));
+        x12.append("GS" + output + getFields(edi850.getGS(), "GS"));
+        String ST = "ST" + output + edi850.getST().getTransactionSetControlNumber() + output
+                + edi850.getST().getTransactionSetIdentifierCode();
+        x12.append(ST);
+        BEG beg = edi850.getST().getBEG();
+        String[] BEGValues = new String[]{"BEG",
+                beg.getTransactionSetPurchaseCode(),
+                beg.getPurchaseOrderTypeCode(),
+                beg.getPurchaseOrderNumber(),
+                beg.getReleaseNumber(),
+                beg.getPurchaseOrderDate(),
+                beg.getContractNumber()};
+        x12.append(String.join(output, BEGValues));
+        x12.append("N9" + output + beg.getN9().getReferenceIdentification() + output +
+                   beg.getN9().getReferenceIdentificationQualifier());
+        String[] DTMValues = new String[]{"DTM",
+            beg.getDTM().getSystemDate(),
+            beg.getDTM().getSystemTime(),
+            beg.getDTM().getDateTimeQualifier()};
+        x12.append(String.join(output, DTMValues));
+        EXT_MSG msg = beg.getMSG();
+        for(MSG child : msg.getMessages())
+        {
+            x12.append("MSG" + output + child.getMessage());
+        }
+        for(N1 n1 : msg.getN1())
+        {
+            x12.append("N1" + output + n1.getEntityIdCode() + output +
+                        n1.getNameOfBuyingParty() + output + n1.getIdCodeQualifier() + output +
+                        n1.getIdCode());
+        }
+        for(N3 n3 : msg.getN3())
+        {
+            x12.append("N3" + output + n3.getStreetAddress1() + output + n3.getStreetAddress2());
+        }
+        for(N4 n4 : msg.getN4())
+        {
+            x12.append("N4" + output + n4.getCityName() + output + n4.getStateOrProvinceCode() +
+                    output + n4.getPostalCode());
+        }
+        for(PER per : msg.getPER())
+        {
+            x12.append("PER" + per.getCommunicationNumberQualifier() + output +
+            per.getName() + output + per.getContractFunctionCode() + output +
+            per.getTelephoneNumber());
+        }
+        for(PO po : beg.getPO())
+        {
+            String[] POLine = new String[]{
+              "PO",
+              po.getAssignedIdentifier(),
+                    po.getQuantityOrdered(),
+                    po.getUnitOfMeasure(),
+                    po.getItemUnitPrice(),
+                    po.getItemUnitPrice()
+            };
+            x12.append(String.join(output, POLine));
+            String[] PIDLine = new String[]{
+                    "PID",
+                    po.getPid().getItemDescriptionType(),
+                    po.getPid().getDescription()
+            };
+            x12.append(String.join(output, PIDLine));
+        }
+        for(REF ref : beg.getREF())
+        {
+            String[] refLine = new String[]{
+                    "REF",
+                    ref.getReferenceIdentificationQualifier(),
+                    ref.getReferenceIdentification(),
+                    ref.getDescription()
+            };
+            x12.append(String.join(output, refLine));
+        }
+        x12.append("SDQ*CS*57*1000*1");
+        for(MSG simpleMessage : beg.getMSG2())
+        {
+            x12.append(String.join("MSG" + output + simpleMessage.getMessage()));
+        }
+        CTT ctt = edi850.getST().getCTT();
+        x12.append("CTT" + output + ctt.getTotalNumberOfPurchaseOrderLineItems() +
+                output + ctt.getHashTotal());
+        SE se = edi850.getSE();
+        x12.append("SE" + output + se.getNumberOfSegmenetsIncluded() + output +
+        se.getTransactionSetControlNumber());
+        GE ge = edi850.getGE();
+        x12.append("GE" + output + ge.getGE01() + output + ge.getGE02());
+        IEA iea = edi850.getIEA();
+        x12.append("IEA" + output + iea.getIEA01() + output + iea.getIEA02());
+        return x12.toString().replace("null", "");
+    }
+
     static public void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        StringToEDIConverter converter = new StringToEDIConverter();
+        EDIConverter converter = new EDIConverter();
         String EDI = "ISA*00* *00* * ZZ*5489002 *01*197607336 *980710*154 9*U*00400*191154908*0*P*|\n" +
                 "GS*PO*5489002*197607336*20000616*1549*191154909*X*004010\n" +
                 "ST*850*191154910\n" +
