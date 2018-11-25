@@ -33,6 +33,7 @@ public class X12Processor {
 
         EXT_MSG extMsg = new EXT_MSG();
         outgoingBeg.setMSG(extMsg);
+        extMsg.setMessages(incomingBeg.getMSG().getMessages());
         N1 n1 = new N1();
         n1.setNameOfBuyingParty("BUYING PARTY");
         n1.setEntityIdCode("VN");
@@ -56,6 +57,7 @@ public class X12Processor {
         outgoing.getST().setCTT(incoming.getST().getCTT());
 
         outgoing.setSE(incoming.getSE());
+        outgoing.setGS(incoming.getGS());
         outgoing.setGE(incoming.getGE());
         outgoing.setIEA(incoming.getIEA());
         outgoing.setISA(incoming.getISA());

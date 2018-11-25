@@ -352,64 +352,95 @@ public class EDIConverter {
             beg.getDTM().getDateTimeQualifier()};
         x12.append(String.join(output, DTMValues));
         EXT_MSG msg = beg.getMSG();
-        for(MSG child : msg.getMessages())
+        if(msg.getMessages() != null)
         {
-            x12.append("MSG" + output + child.getMessage());
+            for(MSG child : msg.getMessages())
+            {
+                x12.append("MSG" + output + child.getMessage());
+            }
         }
-        for(N1 n1 : msg.getN1())
+
+        if(msg.getN1() != null)
         {
-            x12.append("N1" + output + n1.getEntityIdCode() + output +
+            for(N1 n1 : msg.getN1())
+            {
+                x12.append("N1" + output + n1.getEntityIdCode() + output +
                         n1.getNameOfBuyingParty() + output + n1.getIdCodeQualifier() + output +
                         n1.getIdCode());
+            }
         }
-        for(N3 n3 : msg.getN3())
+
+        if(msg.getN3() != null)
         {
-            x12.append("N3" + output + n3.getStreetAddress1() + output + n3.getStreetAddress2());
+            for(N3 n3 : msg.getN3())
+            {
+                if(n3 != null)
+                    x12.append("N3" + output + n3.getStreetAddress1() + output + n3.getStreetAddress2());
+            }
         }
-        for(N4 n4 : msg.getN4())
+
+        if(msg.getN4() != null)
         {
-            x12.append("N4" + output + n4.getCityName() + output + n4.getStateOrProvinceCode() +
-                    output + n4.getPostalCode());
+            for(N4 n4 : msg.getN4())
+            {
+                if(n4 != null)
+                    x12.append("N4" + output + n4.getCityName() + output + n4.getStateOrProvinceCode() +
+                            output + n4.getPostalCode());
+            }
         }
+
         for(PER per : msg.getPER())
         {
             x12.append("PER" + per.getCommunicationNumberQualifier() + output +
             per.getName() + output + per.getContractFunctionCode() + output +
             per.getTelephoneNumber());
         }
-        for(PO po : beg.getPO())
+        if( beg.getPO() != null)
         {
-            String[] POLine = new String[]{
-              "PO",
-              po.getAssignedIdentifier(),
-                    po.getQuantityOrdered(),
-                    po.getUnitOfMeasure(),
-                    po.getItemUnitPrice(),
-                    po.getItemUnitPrice()
-            };
-            x12.append(String.join(output, POLine));
-            String[] PIDLine = new String[]{
-                    "PID",
-                    po.getPid().getItemDescriptionType(),
-                    po.getPid().getDescription()
-            };
-            x12.append(String.join(output, PIDLine));
+            for(PO po : beg.getPO())
+            {
+                String[] POLine = new String[]{
+                        "PO",
+                        po.getAssignedIdentifier(),
+                        po.getQuantityOrdered(),
+                        po.getUnitOfMeasure(),
+                        po.getItemUnitPrice(),
+                        po.getItemUnitPrice()
+                };
+                x12.append(String.join(output, POLine));
+                String[] PIDLine = new String[]{
+                        "PID",
+                        po.getPid().getItemDescriptionType(),
+                        po.getPid().getDescription()
+                };
+                x12.append(String.join(output, PIDLine));
+            }
         }
-        for(REF ref : beg.getREF())
+
+        if(beg.getREF() != null)
         {
-            String[] refLine = new String[]{
-                    "REF",
-                    ref.getReferenceIdentificationQualifier(),
-                    ref.getReferenceIdentification(),
-                    ref.getDescription()
-            };
-            x12.append(String.join(output, refLine));
+            for(REF ref : beg.getREF())
+            {
+                String[] refLine = new String[]{
+                        "REF",
+                        ref.getReferenceIdentificationQualifier(),
+                        ref.getReferenceIdentification(),
+                        ref.getDescription()
+                };
+                x12.append(String.join(output, refLine));
+            }
         }
+
         x12.append("SDQ*CS*57*1000*1");
-        for(MSG simpleMessage : beg.getMSG2())
+
+        if(beg.getMSG2() != null)
         {
-            x12.append(String.join("MSG" + output + simpleMessage.getMessage()));
+            for(MSG simpleMessage : beg.getMSG2())
+            {
+                x12.append(String.join("MSG" + output + simpleMessage.getMessage()));
+            }
         }
+
         CTT ctt = edi850.getST().getCTT();
         x12.append("CTT" + output + ctt.getTotalNumberOfPurchaseOrderLineItems() +
                 output + ctt.getHashTotal());
