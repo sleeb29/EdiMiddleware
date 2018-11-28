@@ -67,10 +67,15 @@ public class ConverterService {
         EDIMessageResponse response = ediMessageResponseRepository
                 .findAll()
                 .stream()
+                .filter(inner -> !inner.isProcessed())
                 .sorted(Comparator.comparing(inner -> inner.getSystemTime()))
                 .findFirst()
-                .get();
+                .orElse(null);
 
+        if(response == null)
+        {
+            return "";
+        }
         XmlMapper xmlMapper = new XmlMapper();
         EDI850 edi850 = xmlMapper.readValue(new StringReader(response.getMessage()), EDI850.class);
         response.setProcessed(true);

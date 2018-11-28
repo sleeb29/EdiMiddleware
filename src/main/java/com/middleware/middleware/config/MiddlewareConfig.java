@@ -22,24 +22,4 @@ import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.
 @Configuration
 public class MiddlewareConfig {
 
-    /*@Bean
-    public Middleware middleware() throws IOException {
-
-        StringBuilder jsonStringBuilder = new StringBuilder();
-
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        try (BufferedReader br =
-                     new BufferedReader(new FileReader(classLoader.getResource("Middleware.json").getFile()))) {
-            jsonStringBuilder.append(br.readLine());
-        }
-
-        String jsonString = jsonStringBuilder.toString();
-
-        return new ObjectMapper().readValue(jsonString, Middleware.class);
-    }
-
-    @Bean
-    public Map<String, Connector> connectorMap(){
-        return new HashMap<>();
-    }*/
 }
