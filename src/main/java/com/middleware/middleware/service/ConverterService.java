@@ -126,8 +126,8 @@ public class ConverterService {
 
     public void sendEmail(EDI850 edi850)
     {
-        String recipient = System.getenv("MIDDLEWARE_RECIPIENT");//"sleeb@emich.edu";
-        String sender = "edi850middleware@gmail.com";
+        String recipient = System.getenv("MIDDLEWARE_RECIPIENT");
+        String sender = System.getenv("MIDDLEWARE_EMAIL");
         String host = "smtp.gmail.com";
 
         Properties prop = new Properties();
