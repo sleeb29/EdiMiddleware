@@ -2,16 +2,14 @@ package com.middleware.middleware.model;
 
 import org.joda.time.DateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "edi_message")
 public class EDIMessage
 {
     @Id
+    @GeneratedValue
     long id;
     boolean processed;
     long systemTime;

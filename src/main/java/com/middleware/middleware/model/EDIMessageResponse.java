@@ -1,15 +1,13 @@
 package com.middleware.middleware.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "edi_message_response")
 public class EDIMessageResponse
 {
     @Id
+    @GeneratedValue
     long id;
     boolean processed;
     long systemTime;
